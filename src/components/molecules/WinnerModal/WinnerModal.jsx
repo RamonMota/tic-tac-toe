@@ -1,39 +1,48 @@
-import { useEffect, useState } from "react";
 import { useHistoryStore } from "../../../context/HistoryContext";
 import { Modal } from "../../atoms/Modal/Modal";
 import "./WinnerModal.scss";
 import { Header } from "../Header/Header";
+import { useGameSettings } from "../../../context/GameSettingsContext";
 
-export const WinnerModal = ({ onResetGame }) => {
+export const WinnerModal = ({ open, onClose, onClick }) => {
   const { xWins, oWins, draws, clearHistory } = useHistoryStore();
-  const [open, setOpen] = useState(false);
-  const amountToWin = localStorage.getItem("amountToWin") || 1;
-
-  const p1 = localStorage.getItem("p1") || "Player 1";
-  const p2 = localStorage.getItem("p2") || "Player 2";
-
-  useEffect(() => {
-    if (xWins >= amountToWin || oWins >= amountToWin || draws >= amountToWin) {
-      setOpen(true);
-    }
-  }, [xWins, oWins, draws]);
-
-  const close = () => setOpen(false);
-  const resetSeries = () => {
-    clearHistory();
-    onResetGame && onResetGame();
-    setOpen(false);
+  const { amountToWin, p1, p2 } = useGameSettings();
+  const newGame = () => {
+    onClick && onClick();
+  };
+  const playAgain = () => {
+    onClose && onClose();
   };
 
-  const winnerKey =
-    xWins >= amountToWin
-      ? "x"
-      : oWins >= amountToWin
-      ? "o"
-      : draws >= amountToWin
-      ? "draw"
-      : "";
-  const winnerLabel = xWins >= amountToWin ? p1 : p2;
+  let winnerKey = "";
+  switch (true) {
+    case xWins >= amountToWin:
+      winnerKey = "x";
+      break;
+    case oWins >= amountToWin:
+      winnerKey = "o";
+      break;
+    case draws >= amountToWin:
+      winnerKey = "draw";
+      break;
+    default:
+      winnerKey = "";
+  }
+
+  let winnerLabel = "";
+  switch (winnerKey) {
+    case "x":
+      winnerLabel = p1;
+      break;
+    case "o":
+      winnerLabel = p2;
+      break;
+    case "draw":
+      winnerLabel = "Empate";
+      break;
+    default:
+      winnerLabel = "";
+  }
 
   return (
     <Modal open={open}>
@@ -42,15 +51,24 @@ export const WinnerModal = ({ onResetGame }) => {
       >
         <span className="emoji">🎉</span>
         <div className="content-modal-body">
-          <h3 className="title">Parabéns, {winnerLabel}!</h3>
+          <h3 className="title">
+            {winnerKey === "draw"
+              ? "Série empatada!"
+              : `Parabéns, ${winnerLabel}!`}
+          </h3>
           <p className="description">
             Você atingiu {amountToWin} vitórias e <br /> venceu esta série.
           </p>
         </div>
         <Header />
-        <button className="btn" onClick={resetSeries}>
-          Jogar Novamente
-        </button>
+        <div className="buttons-content">
+          <button className="btn" onClick={playAgain}>
+            Jogar Novamente
+          </button>
+          <button className="btn" onClick={newGame}>
+            Novo Jogo
+          </button>
+        </div>
       </div>
     </Modal>
   );

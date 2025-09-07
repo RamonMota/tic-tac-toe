@@ -1,10 +1,10 @@
 import { Fragment } from "react";
 import { useHistoryStore } from "../../../context/HistoryContext";
+import { useGameSettings } from "../../../context/GameSettingsContext";
 import "./Header.scss";
 export const Header = () => {
   const { xWins, oWins, draws } = useHistoryStore();
-  const p1 = localStorage.getItem("p1") || "Player 1";
-  const p2 = localStorage.getItem("p2") || "Player 2";
+  const { p1, p2 } = useGameSettings();
 
   const displayInfo = [
     { name: p1, value: xWins },

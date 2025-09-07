@@ -1,31 +1,30 @@
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 import { Modal } from "../../atoms/Modal/Modal";
 import "./StartModal.scss";
+import { useGameSettings } from "../../../context/GameSettingsContext";
 
-export const StartModal = ({ open: openModal }) => {
-  const [open, setOpen] = useState();
+export const StartModal = ({ open, onClose, onSubmit }) => {
   const [selectedRound, setSelectedRound] = useState(null);
-  const hasAmountToWin = Boolean(localStorage.getItem("amountToWin"));
-  const close = () => setOpen(false);
+  const [p1Value, setP1Value] = useState("");
+  const [p2Value, setP2Value] = useState("");
+  const { setSettings } = useGameSettings();
+  const close = () => {
+    setP1Value("");
+    setP2Value("");
+    setSelectedRound(null);
+    onClose && onClose();
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    localStorage.setItem("p1", formData.get("player1"));
-    localStorage.setItem("p2", formData.get("player2"));
-    localStorage.setItem("amountToWin", formData.get("rounds"));
-    onClose()
+    const p1 = formData.get("player1");
+    const p2 = formData.get("player2");
+    const rounds = formData.get("rounds");
+    setSettings({ p1, p2, amountToWin: Number(rounds) });
+    onSubmit && onSubmit();
     close();
   };
-
-  useEffect(() => {
-    if (hasAmountToWin) setOpen(false);
-    else setOpen(true);
-  }, []);
-
-  useEffect(() => {
-    if (openModal) setOpen(true);
-  }, [openModal]);
 
   return (
     <Modal open={open}>
@@ -38,11 +37,27 @@ export const StartModal = ({ open: openModal }) => {
         <form onSubmit={handleSubmit} className="start-form">
           <div className="content-input-form">
             <label>Nome do P1</label>
-            <input type="text" name="player1" required placeholder="-" />
+            <input
+              type="text"
+              name="player1"
+              required
+              placeholder="-"
+              maxLength={6}
+              value={p1Value}
+              onChange={(e) => setP1Value(e.target.value.slice(0, 6))}
+            />
           </div>
           <div className="content-input-form">
             <label>Nome do P2</label>
-            <input type="text" name="player2" required placeholder="-" />
+            <input
+              type="text"
+              name="player2"
+              required
+              placeholder="-"
+              maxLength={6}
+              value={p2Value}
+              onChange={(e) => setP2Value(e.target.value.slice(0, 6))}
+            />
           </div>
           <div className="content-input-form">
             <label>Rodadas</label>

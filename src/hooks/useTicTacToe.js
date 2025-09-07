@@ -49,7 +49,7 @@ export function useTicTacToe({ onGameOver } = {}) {
     return true;
   };
 
-  const reset = () => dispatch({ type: "RESET" });
+  const resetBoard = () => dispatch({ type: "RESET" });
 
   const currentPlayer = state.isXNext ? "X" : "O";
 
@@ -61,6 +61,6 @@ export function useTicTacToe({ onGameOver } = {}) {
     isDraw,
     winningLine,
     play,
-    reset,
+    resetBoard,
   };
 }

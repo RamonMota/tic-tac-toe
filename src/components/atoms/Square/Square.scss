@@ -35,6 +35,8 @@
         border-color: var(--square-winner-border);
 
         svg {
+            animation: jello-horizontal 1s both;
+
             .pathTop {
                 fill: var(--color-icon-winner);
             }
