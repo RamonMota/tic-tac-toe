@@ -40,10 +40,6 @@
         width: 100%;
             border-radius: var(--rounded-15);
     }
-
-    .header {
-        /* Default: no highlight */
-    }
     .buttons-content {
         display: flex;
         flex-direction: column;
@@ -54,7 +50,6 @@
     }
 }
 
-/* Highlight winner slot in header based on class */
 .content-modal-winner.is-x .header .info:nth-child(1) {
   color: var(--color-icon-winner);
 }

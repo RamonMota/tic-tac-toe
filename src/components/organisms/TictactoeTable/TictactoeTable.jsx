@@ -8,8 +8,8 @@ import { WinnerModal } from "../../molecules/WinnerModal/WinnerModal";
 import { BtnAutoplay } from "../../atoms/btnAutoplay/BtnAutoplay";
 import { StartModal } from "../../molecules/StartModal/StartModal";
 import { CurrectPlayer } from "../../atoms/CurrectPlayer/CurrectPlayer";
-import "./TctactoeTable.scss";
 import { useGameSettings } from "../../../context/GameSettingsContext";
+import "./TctactoeTable.scss";
 
 export const TictactoeTable = () => {
   const [isAutoplay, setIsAutoplay] = useState(
