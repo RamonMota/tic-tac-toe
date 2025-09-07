@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "../../atoms/Modal/Modal";
 import "./StartModal.scss";
 import { useGameSettings } from "../../../context/GameSettingsContext";
+import { ROUNDS_OPTIONS } from "../../../constants";
 
 export const StartModal = ({ open, onClose, onSubmit }) => {
   const [selectedRound, setSelectedRound] = useState(null);
@@ -18,17 +19,26 @@ export const StartModal = ({ open, onClose, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const p1 = formData.get("player1");
-    const p2 = formData.get("player2");
-    const rounds = formData.get("rounds");
-    setSettings({ p1, p2, amountToWin: Number(rounds) });
-    onSubmit && onSubmit();
+    const p1 = String(formData.get("player1")).trim();
+    const p2 = String(formData.get("player2")).trim();
+    const rounds = Number(formData.get("rounds"));
+    setSettings({ p1, p2, amountToWin: rounds });
+    onSubmit && onSubmit({ p1, p2, amountToWin: rounds });
     close();
   };
 
+  // Clear inputs whenever modal closes
+  useEffect(() => {
+    if (!open) {
+      setP1Value("");
+      setP2Value("");
+      setSelectedRound(null);
+    }
+  }, [open]);
+
   return (
     <Modal open={open}>
-      <div className="content-modal-winner">
+      <div className="content-modal-start">
         <span className="emoji">🎮</span>
         <div className="content-modal-body">
           <h3 className="title">Bem Vindo ao Tic Tac Toe</h3>
@@ -70,7 +80,7 @@ export const StartModal = ({ open, onClose, onSubmit }) => {
               <option value="" disabled>
                 -
               </option>
-              {[1, 3, 5, 7, 9, 11].map((num) => (
+              {ROUNDS_OPTIONS.map((num) => (
                 <option key={num} value={num}>
                   {num}
                 </option>

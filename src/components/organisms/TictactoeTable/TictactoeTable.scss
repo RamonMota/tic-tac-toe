@@ -33,15 +33,10 @@
 }
 
 .status-bar-temp {
-  // position: absolute;
-  // left: 0;
-  // right: 0;
-  // margin: auto;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  // top: var(--space-40);
 
   svg {
     width: 20px;

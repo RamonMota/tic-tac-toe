@@ -1,16 +1,16 @@
-import { useHistoryStore } from "../../../context/HistoryContext";
 import { Modal } from "../../atoms/Modal/Modal";
 import "./WinnerModal.scss";
 import { Header } from "../Header/Header";
 import { useGameSettings } from "../../../context/GameSettingsContext";
 
-export const WinnerModal = ({ open, onClose, onClick }) => {
-  const { xWins, oWins, draws, clearHistory } = useHistoryStore();
+import { useHistoryStore } from "../../../context/HistoryContext";
+
+export const WinnerModal = ({ open, onClose, onResetGame, onNewGame }) => {
+  const { xWins, oWins } = useHistoryStore();
   const { amountToWin, p1, p2 } = useGameSettings();
-  const newGame = () => {
-    onClick && onClick();
-  };
+  const newGame = () => onNewGame && onNewGame();
   const playAgain = () => {
+    onResetGame && onResetGame();
     onClose && onClose();
   };
 
@@ -21,9 +21,6 @@ export const WinnerModal = ({ open, onClose, onClick }) => {
       break;
     case oWins >= amountToWin:
       winnerKey = "o";
-      break;
-    case draws >= amountToWin:
-      winnerKey = "draw";
       break;
     default:
       winnerKey = "";
@@ -37,9 +34,6 @@ export const WinnerModal = ({ open, onClose, onClick }) => {
     case "o":
       winnerLabel = p2;
       break;
-    case "draw":
-      winnerLabel = "Empate";
-      break;
     default:
       winnerLabel = "";
   }
@@ -51,11 +45,7 @@ export const WinnerModal = ({ open, onClose, onClick }) => {
       >
         <span className="emoji">🎉</span>
         <div className="content-modal-body">
-          <h3 className="title">
-            {winnerKey === "draw"
-              ? "Série empatada!"
-              : `Parabéns, ${winnerLabel}!`}
-          </h3>
+          <h3 className="title">Parabéns, {winnerLabel}!</h3>
           <p className="description">
             Você atingiu {amountToWin} vitórias e <br /> venceu esta série.
           </p>

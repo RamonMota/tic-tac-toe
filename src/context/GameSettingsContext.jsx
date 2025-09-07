@@ -4,6 +4,7 @@ const GameSettingsContext = createContext({
   p1: "Player 1",
   p2: "Player 2",
   amountToWin: 1,
+  isConfigured: false,
   setSettings: () => {},
 });
 
@@ -14,9 +15,10 @@ export function GameSettingsProvider({ children }) {
       const p2 = localStorage.getItem("p2") || "Player 2";
       const amountToWinRaw = localStorage.getItem("amountToWin");
       const amountToWin = amountToWinRaw ? Number(amountToWinRaw) : 1;
-      return { p1, p2, amountToWin };
+      const isConfigured = Boolean(amountToWinRaw);
+      return { p1, p2, amountToWin, isConfigured };
     } catch {
-      return { p1: "Player 1", p2: "Player 2", amountToWin: 1 };
+      return { p1: "Player 1", p2: "Player 2", amountToWin: 1, isConfigured: false };
     }
   });
 
@@ -26,6 +28,7 @@ export function GameSettingsProvider({ children }) {
         p1: p1 ?? prev.p1,
         p2: p2 ?? prev.p2,
         amountToWin: amountToWin ?? prev.amountToWin,
+        isConfigured: true,
       };
       try {
         localStorage.setItem("p1", next.p1);
@@ -48,4 +51,3 @@ export function GameSettingsProvider({ children }) {
 export function useGameSettings() {
   return useContext(GameSettingsContext);
 }
-

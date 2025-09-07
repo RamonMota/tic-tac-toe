@@ -1,38 +1,29 @@
 import { useEffect, useState } from "react";
-import { Square } from "../../atoms/Square/Square";
-import { Icon } from "../../atoms/Icons/Icons";
+// imports trimmed; Board/Controls handle rendering
 import { useTicTacToe } from "../../../hooks/useTicTacToe";
 import { useAutoplay } from "../../../hooks/useAutoplay";
 import { useHistoryStore } from "../../../context/HistoryContext";
 import { WinnerModal } from "../../molecules/WinnerModal/WinnerModal";
-import { BtnAutoplay } from "../../atoms/btnAutoplay/BtnAutoplay";
 import { StartModal } from "../../molecules/StartModal/StartModal";
-import { CurrectPlayer } from "../../atoms/CurrectPlayer/CurrectPlayer";
 import { useGameSettings } from "../../../context/GameSettingsContext";
-import "./TctactoeTable.scss";
+import "./TictactoeTable.scss";
+import { AUTOPLAY_INTERVAL_MS } from "../../../constants";
+import { storage } from "../../../services/storage";
+import { Board } from "../../atoms/Board/Board";
+import { Controls } from "../../atoms/Controls/Controls";
+import { Status } from "../../atoms/Status/Status";
+import { useSeries } from "../../../hooks/useSeries";
+import { useRequiresSetup } from "../../../hooks/useRequiresSetup";
 
 export const TictactoeTable = () => {
-  const [isAutoplay, setIsAutoplay] = useState(
-    () => localStorage.getItem("autoplay") === "true"
-  );
-  const [isStartModalOpen, setIsStartModalOpen] = useState(() => {
-    try {
-      const amountToWin = localStorage.getItem("amountToWin");
-      return !amountToWin;
-    } catch {
-      return true;
-    }
-  });
-
-  const intervalAutopllay = 5000;
+  const [isAutoplay, setIsAutoplay] = useState(() => storage.get("autoplay") === "true");
   const { amountToWin } = useGameSettings();
+  const requiresSetup = useRequiresSetup();
+  const [isStartModalOpen, setIsStartModalOpen] = useState(() => requiresSetup);
   const { addResult, clearHistory, xWins, oWins } = useHistoryStore();
-  const [isWinnerModalOpen, setIsWinnerModalOpen] = useState(false);
 
   useEffect(() => {
-    try {
-      localStorage.setItem("autoplay", String(isAutoplay));
-    } catch {}
+    storage.set("autoplay", String(isAutoplay));
   }, [isAutoplay]);
 
   const {
@@ -49,9 +40,18 @@ export const TictactoeTable = () => {
     },
   });
 
+  const { isWinnerModalOpen, setIsWinnerModalOpen, playAgain } = useSeries({
+    amountToWin,
+    xWins,
+    oWins,
+    winner,
+    resetBoard,
+    clearHistory,
+  });
+
   const { countdown, restartCountdown } = useAutoplay({
     enabled: isAutoplay,
-    intervalMs: intervalAutopllay,
+    intervalMs: AUTOPLAY_INTERVAL_MS,
     canPlay: !winner && !isDraw,
     onAutoMove: () => {
       const emptySquares = board
@@ -84,34 +84,15 @@ export const TictactoeTable = () => {
     clearHistory();
   };
 
-  const playAgain = () => {
-    setIsWinnerModalOpen(false);
-    clearHistory();
-    resetBoard();
-  };
-
-  useEffect(() => {
-    if (winner) {
-      setTimeout(() => {
-        resetBoard();
-      }, 2000);
-    }
-  }, [winner]);
-
-  useEffect(() => {
-    if (xWins >= amountToWin || oWins >= amountToWin) {
-      setTimeout(() => {
-        setIsWinnerModalOpen(true);
-      }, 2000);
-    }
-  }, [xWins, oWins]);
+  // Series lifecycle is handled by useSeries
 
   return (
     <>
       <WinnerModal
         open={isWinnerModalOpen}
         onClose={playAgain}
-        onClick={newGame}
+        onResetGame={resetBoard}
+        onNewGame={newGame}
       />
       <StartModal
         open={isStartModalOpen}
@@ -119,39 +100,16 @@ export const TictactoeTable = () => {
         onSubmit={startNewGame}
       />
       <div className="board-container">
-        <div className="board" role="grid" aria-label="tabuleiro">
-          {board.map((value, i) => {
-            const isWinning = winningLine?.includes(i);
-            return (
-              <Square
-                key={i}
-                value={value}
-                isWinning={!!isWinning}
-                onClick={() => handleClick(i)}
-                ariaLabel={`casa ${i + 1}${value ? `: ${value}` : ""}`}
-                disabled={!!winner || !!value}
-              />
-            );
-          })}
-        </div>
+        <Board board={board} winningLine={winningLine} winner={winner} onClick={handleClick} />
         <span className="board-footer" />
       </div>
-      <CurrectPlayer
-        winner={winner}
-        isDraw={isDraw}
-        currentPlayer={currentPlayer}
+      <Status winner={winner} isDraw={isDraw} currentPlayer={currentPlayer} />
+      <Controls
+        isAutoplay={isAutoplay}
+        countdown={countdown}
+        onToggleAutoplay={handleAutoplay}
+        onRestart={newGame}
       />
-      <div className="flex-row">
-        <BtnAutoplay
-          isAutoplay={isAutoplay}
-          countdown={countdown}
-          onToggle={handleAutoplay}
-        />
-        <button type="button" className="btn" onClick={newGame}>
-          <Icon name={"rotate"} />
-          Reiniciar
-        </button>
-      </div>
     </>
   );
 };

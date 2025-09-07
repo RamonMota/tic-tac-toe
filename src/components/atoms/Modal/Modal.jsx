@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Modal.scss";
 
-export const Modal = ({ open, children, animationMs = 200 }) => {
+export const Modal = ({ open, children, animationMs = 200, onClose, closeOnBackdrop = false, closeOnEsc = false }) => {
   const [isMounted, setIsMounted] = useState(open);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -27,7 +27,16 @@ export const Modal = ({ open, children, animationMs = 200 }) => {
   const modalClass = `modal ${isClosing ? "fade-out" : "fade-in"}`;
 
   return (
-    <div className={backdropClass} role="dialog" aria-modal="true">
+    <div
+      className={backdropClass}
+      role="dialog"
+      aria-modal="true"
+      onClick={closeOnBackdrop ? onClose : undefined}
+      onKeyDown={(e) => {
+        if (closeOnEsc && e.key === "Escape") onClose && onClose();
+      }}
+      tabIndex={-1}
+    >
       <div className={modalClass} onClick={(e) => e.stopPropagation()}>
         {children}
       </div>
