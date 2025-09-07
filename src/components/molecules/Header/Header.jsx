@@ -3,11 +3,13 @@ import { useHistoryStore } from "../../../context/HistoryContext";
 import "./Header.scss";
 export const Header = () => {
   const { xWins, oWins, draws } = useHistoryStore();
-  
+  const p1 = localStorage.getItem("p1") || "Player 1";
+  const p2 = localStorage.getItem("p2") || "Player 2";
+
   const displayInfo = [
-    { name: "Player 1", value: xWins },
+    { name: p1, value: xWins },
     { name: "Empate", value: draws },
-    { name: "Player 2", value: oWins },
+    { name: p2, value: oWins },
   ];
 
   return (

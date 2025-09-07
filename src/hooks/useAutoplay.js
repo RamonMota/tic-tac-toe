@@ -27,7 +27,7 @@ export function useAutoplay({ enabled, intervalMs = 5000, canPlay, onAutoMove })
     }
   }, [countdown, enabled, canPlay, onAutoMove, initial]);
 
-  const restart = () => setCountdown(initial);
+  const restartCountdown = () => setCountdown(initial);
 
-  return { countdown, restart };
+  return { countdown, restartCountdown };
 }

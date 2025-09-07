@@ -1,27 +1,29 @@
 import { useEffect, useState } from "react";
 import { Square } from "../../atoms/Square/Square";
-import { X } from "../../atoms/X/X";
-import { O } from "../../atoms/O/O";
-import "./TctactoeTable.scss";
 import { Icon } from "../../atoms/Icons/Icons";
 import { useTicTacToe } from "../../../hooks/useTicTacToe";
 import { useAutoplay } from "../../../hooks/useAutoplay";
 import { useHistoryStore } from "../../../context/HistoryContext";
+import { WinnerModal } from "../../molecules/WinnerModal/WinnerModal";
 import { BtnAutoplay } from "../../atoms/btnAutoplay/BtnAutoplay";
+import { StartModal } from "../../molecules/StartModal/StartModal";
+import { CurrectPlayer } from "../../atoms/CurrectPlayer/CurrectPlayer";
+import "./TctactoeTable.scss";
 
 export const TictactoeTable = () => {
   const [isAutoplay, setIsAutoplay] = useState(
     () => localStorage.getItem("autoplay") === "true"
   );
+  const [isStartModalOpen, setIsStartModalOpen] = useState(false);
   const intervalAutopllay = 5000;
-
-  const { addResult } = useHistoryStore();
 
   useEffect(() => {
     try {
       localStorage.setItem("autoplay", String(isAutoplay));
     } catch {}
   }, [isAutoplay]);
+
+  const { addResult } = useHistoryStore();
 
   const { board, currentPlayer, winner, isDraw, winningLine, play, reset } =
     useTicTacToe({
@@ -30,12 +32,7 @@ export const TictactoeTable = () => {
       },
     });
 
-  const handleClick = (index) => {
-    const didPlay = play(index);
-    if (didPlay) restart();
-  };
-
-  const { countdown, restart } = useAutoplay({
+  const { countdown, restartCountdown } = useAutoplay({
     enabled: isAutoplay,
     intervalMs: intervalAutopllay,
     canPlay: !winner && !isDraw,
@@ -50,22 +47,31 @@ export const TictactoeTable = () => {
     },
   });
 
+  const handleClick = (index) => {
+    const didPlay = play(index);
+    if (didPlay) restartCountdown();
+  };
+
   const handleAutoplay = () => {
     setIsAutoplay((prev) => !prev);
   };
 
+  const handleRestart = () => {
+    setIsStartModalOpen(true);
+  };
+
   return (
     <>
+      <WinnerModal onResetGame={reset} />
+      <StartModal open={isStartModalOpen} />
       <div className="board-container">
         <div className="board" role="grid" aria-label="tabuleiro">
           {board.map((value, i) => {
             const isWinning = winningLine?.includes(i);
-            const content =
-              value === "X" ? <X /> : value === "O" ? <O /> : null;
             return (
               <Square
                 key={i}
-                value={content}
+                value={value}
                 isWinning={!!isWinning}
                 onClick={() => handleClick(i)}
                 ariaLabel={`casa ${i + 1}${value ? `: ${value}` : ""}`}
@@ -76,19 +82,18 @@ export const TictactoeTable = () => {
         </div>
         <span className="board-footer" />
       </div>
-      <div
-        className="status-bar-temp"
-        style={{ height: !winner && !isDraw ? "20px" : "0" }}
-      >
-        {!winner && !isDraw ? currentPlayer === "X" ? <X /> : <O /> : null}
-      </div>
+      <CurrectPlayer
+        winner={winner}
+        isDraw={isDraw}
+        currentPlayer={currentPlayer}
+      />
       <div className="flex-row">
         <BtnAutoplay
           isAutoplay={isAutoplay}
           countdown={countdown}
           onToggle={handleAutoplay}
         />
-        <button type="button" className="btn" onClick={reset}>
+        <button type="button" className="btn" onClick={handleRestart}>
           <Icon name={"rotate"} />
           Reiniciar
         </button>

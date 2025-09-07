@@ -1,0 +1,114 @@
+.content-modal-winner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-20);
+
+    .emoji {
+        font-size: 100px;
+        font-weight: 600;
+        line-height: 1.1;
+        margin: 30px 0 15px;
+    }
+
+    .content-modal-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-5);
+
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .description {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5;
+            opacity: .5;
+            color: white;
+        }
+    }
+
+    .btn {
+        width: 100%;
+        border-radius: var(--rounded-15);
+    }
+
+    .start-form {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-10);
+        width: 100%;
+    }
+
+    .content-input-form {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        label {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--space-5);
+        }
+
+        input {
+            padding: var(--space-10);
+            border-radius: var(--rounded-15);
+            border: 1px solid var(--color-muted);
+            background: var(--color-bg);
+            color: var(--color-text);
+
+        }
+
+        select {
+            appearance: none;
+            color: var(--color-text);
+            padding: var(--space-10);
+            border-radius: var(--rounded-15);
+            border: 1px solid var(--color-muted);
+            background: url("data:image/svg+xml;utf8,<svg fill='white' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
+            background-color: var(--color-bg);
+        }
+    }
+
+    .radio-button-group {
+        display: flex;
+        gap: var(--space-10);
+        align-items: center;
+
+        .custom-radio-button {
+            border-radius: var(--rounded-15);
+            height: 42px;
+            width: 100%;
+            border: 1px solid var(--color-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-bg);
+            color: var(--color-text);
+            cursor: pointer;
+            position: relative;
+
+            &.selected {
+                background: var(--color-icon-winner);
+                border: 1px solid var(--color-icon-footer-winner);
+            }
+
+            input {
+                opacity: 0;
+                width: 50px;
+                height: 50px;
+                position: absolute;
+                inset: 0;
+                margin: auto;
+            }
+        }
+    }
+}

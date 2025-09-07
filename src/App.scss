@@ -8,6 +8,9 @@
 
   transition: all 0.3s ease-in-out;
 }
+html {
+  transition: none !important;
+}
 
 :root {
   --space-5: 5px;
@@ -23,6 +26,9 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   width: 100%;
+  overflow: hidden;
+  transition: background 0.3s ease-in-out;
+  
 
   #root {
     width: 100%;
