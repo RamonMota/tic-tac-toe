@@ -9,7 +9,9 @@
 
 .modal {
   position: fixed;
-  inset: var(--space-15);
+  right: var(--space-15);
+  left: var(--space-15);
+  bottom: var(--space-15);
   background: var(--square-bg);
   color: var(--color-text);
   border-radius: var(--rounded-20);

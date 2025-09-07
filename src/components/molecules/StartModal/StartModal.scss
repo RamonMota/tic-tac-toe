@@ -55,26 +55,29 @@
         label {
             font-size: 16px;
             font-weight: 600;
-            margin-bottom: var(--space-5);
         }
 
         input {
-            padding: var(--space-10);
+            height: 40px;
+            padding: 0 var(--space-10);
             border-radius: var(--rounded-15);
             border: 1px solid var(--color-muted);
             background: var(--color-bg);
             color: var(--color-text);
+            font-size: 16px;
 
         }
 
         select {
+            height: 40px;
             appearance: none;
             color: var(--color-text);
-            padding: var(--space-10);
+            padding: 0 var(--space-10);
             border-radius: var(--rounded-15);
             border: 1px solid var(--color-muted);
             background: url("data:image/svg+xml;utf8,<svg fill='white' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center;
             background-color: var(--color-bg);
+            font-size: 16px;
         }
     }
 
