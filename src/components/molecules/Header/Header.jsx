@@ -1,10 +1,13 @@
 import { Fragment } from "react";
+import { useHistoryStore } from "../../../context/HistoryContext";
 import "./Header.scss";
 export const Header = () => {
+  const { xWins, oWins, draws } = useHistoryStore();
+  
   const displayInfo = [
-    { name: "Player 1", value: 5 },
-    { name: "Empate", value: 5 },
-    { name: "Player 2", value: 5 },
+    { name: "Player 1", value: xWins },
+    { name: "Empate", value: draws },
+    { name: "Player 2", value: oWins },
   ];
 
   return (

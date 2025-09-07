@@ -4,13 +4,9 @@
     border-radius: var(--rounded-20);
     background: var(--board-bg);
     padding: var(--space-10);
-    position: fixed;
-    bottom: var(--space-40);
-    left: 0;
-    right: 0;
-    margin: auto;
+    position: relative;
+    margin: auto 0 40px;
     width: fit-content;
-
 
     .theme-btn {
         padding: 0;
@@ -21,12 +17,21 @@
         background: var(--square-bg);
         color: var(--color-text);
         cursor: pointer;
-        transition: background 0.2s ease, border-color 0.2s ease;
 
         &.is-active {
             border: 2px solid var(--square-winner-border);
             background: var(--square-winner-bg);
             cursor: default;
         }
+    }
+
+    .floating-name {
+        position: absolute;
+        bottom: -20px;
+        right: 0;
+        left: 0;
+        margin: auto;
+        width: fit-content;
+        font-size: 12px;
     }
 }

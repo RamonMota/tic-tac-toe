@@ -33,22 +33,27 @@
 }
 
 .status-bar-temp {
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
+  // position: absolute;
+  // left: 0;
+  // right: 0;
+  // margin: auto;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  top: var(--space-40);
+  // top: var(--space-40);
+
+  svg {
+    width: 20px;
+    display: block;
+    margin: auto;
+    animation: fadeInSymbol 0.5s cubic-bezier(.2, .8, .25, 1) .5s both !important;
+  }
 }
 
-.reset {
-  cursor: pointer;
-  padding: var(--space-10) var(--space-20);
-  border-radius: var(--rounded-20);
-  border: none;
-  background: var(--color-text);
-  color: var(--color-bg);
+.flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-15);
 }

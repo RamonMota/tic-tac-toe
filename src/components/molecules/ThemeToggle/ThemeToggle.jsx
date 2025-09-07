@@ -31,6 +31,7 @@ export const ThemeToggle = () => {
           data-theme={t}
         />
       ))}
+      <p className="floating-name">{theme.charAt(0).toUpperCase() + theme.slice(1)}</p>
     </div>
   );
 };

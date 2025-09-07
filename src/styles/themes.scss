@@ -1,54 +1,75 @@
-:root {
-  --color-bg: #0f0f0f;
-  --color-text: #ffffff;
-  --color-muted: #999999;
-
-  --board-bg: #2a2a2a;
-  --square-bg: #1a1a1a;
-  --square-border: #444444;
-  --square-hover-bg: #222222;
-  --square-winner-bg: #154c2e;
-  --square-winner-border: #1db954;
-}
-
 :root[data-theme="dark"], [data-theme="dark"] {
   --color-bg: #0f0f0f;
   --color-text: #ffffff;
-  --color-muted: #999999;
+  --color-muted: #b0b0b0;
 
-  --board-bg: #353434;
-  --board-footer: #212020;
+  --color-icon: #ffffff;
+  --color-icon-footer: #b0b0b0;
+  --color-icon-winner: #22c55e;
+  --color-icon-footer-winner: #1a9e52;
+
+  --board-bg: #2f2f2f;
+  --board-footer: #1e1e1e;
   --square-bg: #1a1a1a;
-  --square-border: #444444;
-  --square-hover-bg: #222222;
-  --square-winner-bg: #154c2e;
-  --square-winner-border: #1db954;
+  --square-border: #6a6a6a;
+  --square-hover-bg: #242424;
+  --square-winner-bg: #15281f;
+  --square-winner-border: #22c55e;
 }
 
 :root[data-theme="light"], [data-theme="light"] {
   --color-bg: #ffffff;
-  --color-text: #111111;
-  --color-muted: #555555;
+  --color-text: #0f0f0f;
+  --color-muted: #5f6775;
 
-  --board-bg: #f2f2f2;
-  --board-footer: #bbbbbb;
+  --color-icon: #0f0f0f;
+  --color-icon-footer: #5f6775;
+  --color-icon-winner: #22c55e;
+  --color-icon-footer-winner: #1a9e52;
+
+  --board-bg: #e9edf3;
+  --board-footer: #d7dbe2;
   --square-bg: #ffffff;
-  --square-border: #cccccc;
-  --square-hover-bg: #f7f7f7;
-  --square-winner-bg: #e6f7ec;
-  --square-winner-border: #1db954;
+  --square-border: #9aa3b2;
+  --square-hover-bg: #f3f6fa;
+  --square-winner-bg: #e8f7ee;
+  --square-winner-border: #22c55e;
 }
 
 :root[data-theme="retro"], [data-theme="retro"] {
-  --color-bg: #10171a;
-  --color-text: #e5ffcc;
-  --color-muted: #a3b3a3;
+  --color-bg: #0f1a14;
+  --color-text: #e9ffe0;
+  --color-muted: #a7c0ad;
 
-  --board-bg: #10411b;
-  --board-footer: #0b2e13;
-  --square-bg: #0d1f12;
-  --square-border: #2e5e3e;
-  --square-hover-bg: #12351a;
-  --square-winner-bg: #165c26;
-  --square-winner-border: #8cff66;
+  --color-icon: #e9ffe0;
+  --color-icon-footer: #a7c0ad;
+  --color-icon-winner: #7dff6a;
+  --color-icon-footer-winner: #56cc4d;
+
+  --board-bg: #163a25;
+  --board-footer: #0f2a1b;
+  --square-bg: #0f2318;
+  --square-border: #4c705c;
+  --square-hover-bg: #153222;
+  --square-winner-bg: #1b3f2b;
+  --square-winner-border: #7dff6a;
+}
+
+:root[data-theme="dracula"], [data-theme="dracula"] {
+  --color-bg: #282a36;
+  --color-text: #f8f8f2;
+  --color-muted: #8a90b5;
+
+  --color-icon: #f8f8f2;
+  --color-icon-footer: #b2b7d5;
+  --color-icon-winner: #ff79c6;
+  --color-icon-footer-winner: #9a4474;
+
+  --board-bg: #4b4f66;
+  --board-footer: #3a3d52;
+  --square-bg: #2b2e3b;
+  --square-border: #7a7f99;
+  --square-hover-bg: #3a3d4a;
+  --square-winner-bg: #2a1730;
+  --square-winner-border: #ff79c6;
 }
