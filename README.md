@@ -1,13 +1,104 @@
-## Visão geral do projeto
+## 📌 Visão geral
+```
+Projeto desenvolvido como parte do teste técnico do Grupo Deal para a vaga de Front-End React.
+O objetivo principal era ser construído priorizando boas práticas de React, organização arquitetural e clareza de código, de forma a garantir escalabilidade, manutenção e usabilidade.
 
-- Jogo da Velha com placar de série: vence quem atingir primeiro a meta de vitórias (configurável).
-- Modal inicial para configurar nomes dos jogadores e a quantidade de vitórias necessárias.
-- Modal de vencedor da série. Empates apenas acumulam no placar e não encerram a série.
-- Modo autoplay opcional com jogadas aleatórias e contador regressivo.
-- Estilos com variáveis CSS, layout responsivo e animações de abertura/fechamento nos modais.
-- Temas predefinidos podem ser aplicados a qualquer momento e persistidos no localStorage.
+O desafio consistiu em criar uma versão evoluída do Jogo da Velha, com foco em:
+	•	Placar em séries com meta configurável.
+	•	Configurações dinâmicas via modal inicial.
+	•	Interface moderna, responsiva e acessível.
+	•	Persistência de dados no localStorage.
+	•	Temas dinâmicos aplicáveis em tempo real.
+	•	Modo autoplay opcional com jogadas automáticas.
 
-## Estrutura de pastas
+```
+## 🕹️ Funcionalidades 
+```
+# Série e Placar
+	•	Definição da meta de vitórias antes de iniciar (3, 5, 11…).
+	•	Placar em tempo real com vitórias e empates acumulados.
+	•	Empates não encerram a série.
+	•	Encerramento automático ao atingir a meta → abre WinnerModal.
+	•	Opções: Reiniciar Partida (mantém placar) e Reiniciar Série (zera resultados).
+
+# Modal Inicial de Configuração
+	•	Exibido ao abrir ou reiniciar série.
+	•	Permite definir:
+    • Nome dos jogadores (obrigatório, com validação html base).
+	  •	Meta de vitórias (obrigatória, com validação html base).
+
+# Modal de Vencedor da Série
+	•	Abre automaticamente quando um jogador atinge a meta.
+	•	Mostra o vencedor e o placar final.
+	•	Oferece duas opções: Nova série (reset total) ou Jogar novamente (manter configs).
+
+# Regras da Partida
+	•	Tabuleiro 3x3 com turnos alternados.
+	•	Células já ocupadas não aceitam jogada.
+	•	Detecção de vitória, empate e partida em andamento.
+	•	Ao fim da partida, o placar é atualizado e o tabuleiro bloqueado até reinício.
+
+
+# Modo Autoplay
+	•	Toggle para ativar/desativar.
+	•	Jogadas automáticas válidas e aleatórias.
+	•	Contador regressivo visível antes de cada jogada.
+	•	Pausa quando modais são abertos e encerra ao final da série.
+	•	Pode ser interrompido a qualquer momento.
+
+# UI/UX e Responsividade:
+	•	Variáveis CSS para cores, espaçamentos, tipografia e temas.
+	•	Layout responsivo: mobile (≥360px), tablet e desktop.
+	•	Animações consistentes em modais, sem quebras de layout.
+	•	Feedbacks visuais claros para turno, células e resultados.
+	•	Acessibilidade: navegação por teclado (Tab/Enter/Esc), foco visível e contraste conforme WCAG AA.
+	•	Verificação de tema padrão do SO e aplicação automática, no primeiro acesso do usuário.
+	•	Configurações validadas e persistidas de dados no localStorage, para armazenas dados memo quando a tela é atualizada.
+
+# Temas e Persistência:
+	•	Disponibiliza ao menos 4 temas predefinidos.
+	•	Aplicação imediata via variáveis CSS, sem reload.
+	•	Configurações persistidas no localStorage (nomes, meta, tema, autoplay).
+
+# Estado e Reinicialização:
+	•	Reiniciar Partida: limpa tabuleiro e mantém configs iniciais.
+	•	Novo jogo: zera placar resultados e redefini configs iniciais.
+	•	Abertura do StartModal pausa autoplay automaticamente.
+
+```
+## 🛠️ Tecnologias
+
+	•	React (JavaScript)
+	•	Context API para gerenciamento global de estado
+	•	Hooks customizados (useTicTacToe, useSeries, useAutoplay)
+	•	CSS Variables + SCSS para temas e estilos dinâmicos
+	•	Vite para build e ambiente de desenvolvimento
+
+## ⚙️  Justificativas Técnicas
+```
+Arquitetura e Componentização
+	•	Atomic Design (atoms, molecules, organisms) → modularidade, reuso e evolução da UI.
+	•	Contextos dedicados:
+	  •	GameSettingsContext: mantém nomes e meta em memória, sincronizando com localStorage.
+	  •	HistoryContext: centraliza estatísticas de vitórias e empates.
+
+Hooks Customizados
+	•	useTicTacToe: encapsula regras do jogo e expõe API clara (play, resetBoard, winner, isDraw).
+	•	useSeries: controla ciclo da série, abertura do WinnerModal e reset automático.
+	•	useAutoplay: gerencia timers e reinicia contagem a cada jogada.
+	•	useRequiresSetup: força abertura do StartModal quando necessário.
+
+Gestão de Modais
+	•	StartModal e WinnerModal → controlados por props (open, onClose).
+	•	Orquestração centralizada em TictactoeTable, simplificando fluxos como Novo Jogo e Jogar Novamente.
+
+Responsividade e UX
+	•	Navegação completa via teclado (Tab, Enter, Esc).
+	•	Animações e transições para destacar eventos importantes.
+	•	Persistência em localStorage garante continuidade da experiência.
+
+```
+## 📂 Estrutura de pastas
 
 ```
 src/
@@ -18,7 +109,7 @@ src/
       X/, O/          # Ícones SVG
       CurrentPlayer/  # Indicador do jogador atual
       btnAutoplay/    # Botão + contador do autoplay
-    molecules/        # Combinação de átomos
+      molecules/        # Combinação de átomos
       Header/         # Placar (p1, empates, p2)
       StartModal/     # Configuração inicial (nomes e meta)
       WinnerModal/    # Resultado da série (apenas X/O)
@@ -45,53 +136,37 @@ src/
   main.jsx
 ```
 
-## Justificativa das decisões técnicas
-
-- Separação por camadas (atoms/molecules/organisms): facilita a reutilização, leitura e evolução da UI, com uma adequação do atomic design às necessidades do projeto.
-- Contextos dedicados:
-  - GameSettingsContext: mantém nomes e meta de vitórias em memória, sincronizando com localStorage (UI atualiza em tempo real, com backup persistente).
-  - HistoryContext: centraliza o histórico de partidas e estatísticas (xWins, oWins, draws).
-- Hooks especializados:
-  - useTicTacToe: isola as regras do jogo e expõe API clara (`play`, `resetBoard`, `winner`, `isDraw`).
-  - useSeries: gerencia o ciclo da série (abrir WinnerModal ao atingir a meta; reset automático do tabuleiro após 1s de vitória).
-  - useAutoplay: encapsula timers com segurança e reinício de contagem a cada jogada.
-- Modais controlados: `StartModal` e `WinnerModal` recebem `open`/`onClose`, deixando a orquestração no componente pai (Table), o que simplifica fluxos como “Novo jogo” e “Jogar novamente”.
-- Responsividade e UX:
-  - pataforma totalmente navegável atraves de teclado com acessibilidade (Tab, Enter, Esc, etc).
-  - animaçãoes e transições para enfatisar  informações importantes e tornar a experiência mais agradável.
-  - pessistencia de dados atraves de localstorage para melhorar a experiência de navegação.
-
-## Instruções para build e execução do projeto
-
-Pré‑requisitos:
-
-- Node.js 18+ (recomendado)
-- npm 9+ (ou pnpm/yarn, se preferir)
-
-Instalação das dependências:
-
+## 🚀 Instruções de Execução
 ```
+# Pré‑requisitos:
+Node.js 18+ (recomendado)
+npm 9+ (ou pnpm/yarn, se preferir)
+
+# Clonar o repositório
+git clone <url-do-repositorio>
+
+# Entrar no diretório
+cd jogo-da-velha
+
+# Instalar dependências
 npm install
-```
 
-Ambiente de desenvolvimento (HMR):
-
-```
+# Rodar em ambiente de desenvolvimento (HMR via Vite)
 npm run dev
-```
 
-Acesse a URL exibida no terminal (geralmente http://localhost:5173).
+# Acesse a URL exibida no terminal
+(geralmente http://localhost:5173).
 
-Build de produção:
-
-```
-npm run build
-```
-
+https://tic-tac-toe-chi-ten-81.vercel.app/
 Os artefatos serão gerados em `dist/`.
-
-Preview do build (servidor local):
+```
+## 🌐 Demo Online
+```
+👉 Acesse aqui a versão publicada: https://tic-tac-toe-chi-ten-81.vercel.app/
 
 ```
-npm run preview
+## ✅ Conclusão
 ```
+O projeto de Jogo da Velha foi desenvolvido para atender integralmente os requisitos do desafio, mas também foi possivel identificar oportunidades para demonstrar como uma aplicação simples pode ser expandida com valor adicional em usabilidade, acessibilidade e arquitetura de código, sem perder a simplicidade ou complitar com os requisitos obrigatórios.
+A proposta entrega uma solução completa, com interface responsiva, temas dinâmicos, persistência de dados e modo automático de jogo, ao mesmo tempo em que mantém um código modular, escalável e de fácil manutenção.
+Espera-se conseguir demonstrar como resultado final, não apenas um jogo funcional, mas uma aplicação que reflete boas práticas de desenvolvimento front-end, priorizando tanto a experiência do usuário quanto a clareza e a sustentabilidade técnica do código.
