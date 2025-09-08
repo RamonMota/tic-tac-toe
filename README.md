@@ -47,7 +47,7 @@ src/
 
 ## Justificativa das decisões técnicas
 
-- Separação por camadas (atoms/molecules/organisms): facilita reutilização, leitura e evolução da UI com uma adequação do atomic design, a necessidade do projeto.
+- Separação por camadas (atoms/molecules/organisms): facilita a reutilização, leitura e evolução da UI, com uma adequação do atomic design às necessidades do projeto.
 - Contextos dedicados:
   - GameSettingsContext: mantém nomes e meta de vitórias em memória, sincronizando com localStorage (UI atualiza em tempo real, com backup persistente).
   - HistoryContext: centraliza o histórico de partidas e estatísticas (xWins, oWins, draws).
