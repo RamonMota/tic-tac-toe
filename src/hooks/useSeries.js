@@ -5,6 +5,7 @@ export function useSeries({
   xWins,
   oWins,
   winner,
+  isDraw,
   resetBoard,
   clearHistory,
 }) {
@@ -17,12 +18,11 @@ export function useSeries({
   }, [xWins, oWins, amountToWin]);
 
   useEffect(() => {
-    if (!winner) return;
-    const t = setTimeout(() => {
+    if (!winner && !isDraw) return;
+    setTimeout(() => {
       resetBoard();
     }, 1000);
-    return () => clearTimeout(t);
-  }, [winner, resetBoard]);
+  }, [winner, isDraw]);
 
   const playAgain = () => {
     setIsWinnerModalOpen(false);

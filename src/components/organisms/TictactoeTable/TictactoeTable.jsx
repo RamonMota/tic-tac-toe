@@ -46,6 +46,7 @@ export const TictactoeTable = () => {
     xWins,
     oWins,
     winner,
+    isDraw,
     resetBoard,
     clearHistory,
   });
