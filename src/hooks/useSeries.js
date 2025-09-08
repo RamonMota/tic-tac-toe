@@ -12,7 +12,7 @@ export function useSeries({
 
   useEffect(() => {
     if (xWins >= amountToWin || oWins >= amountToWin) {
-      setIsWinnerModalOpen(true);
+      setTimeout(() => setIsWinnerModalOpen(true), 1000);
     }
   }, [xWins, oWins, amountToWin]);
 

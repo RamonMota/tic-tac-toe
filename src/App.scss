@@ -37,6 +37,20 @@ body {
 
 }
 
+html,
+body,
+.App {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.App::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
 p,
 h1,
 h2,
@@ -79,6 +93,10 @@ h6 {
 
   svg {
     width: 18px;
+
+    path {
+      stroke: var(--color-bg);
+    }
   }
 }
 

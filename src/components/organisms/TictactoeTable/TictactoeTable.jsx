@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-// imports trimmed; Board/Controls handle rendering
 import { useTicTacToe } from "../../../hooks/useTicTacToe";
 import { useAutoplay } from "../../../hooks/useAutoplay";
 import { useHistoryStore } from "../../../context/HistoryContext";
 import { WinnerModal } from "../../molecules/WinnerModal/WinnerModal";
 import { StartModal } from "../../molecules/StartModal/StartModal";
 import { useGameSettings } from "../../../context/GameSettingsContext";
-import "./TictactoeTable.scss";
 import { AUTOPLAY_INTERVAL_MS } from "../../../constants";
 import { storage } from "../../../services/storage";
 import { Board } from "../../atoms/Board/Board";
@@ -14,9 +12,12 @@ import { Controls } from "../../atoms/Controls/Controls";
 import { Status } from "../../atoms/Status/Status";
 import { useSeries } from "../../../hooks/useSeries";
 import { useRequiresSetup } from "../../../hooks/useRequiresSetup";
+import "./TictactoeTable.scss";
 
 export const TictactoeTable = () => {
-  const [isAutoplay, setIsAutoplay] = useState(() => storage.get("autoplay") === "true");
+  const [isAutoplay, setIsAutoplay] = useState(
+    () => storage.get("autoplay") === "true"
+  );
   const { amountToWin } = useGameSettings();
   const requiresSetup = useRequiresSetup();
   const [isStartModalOpen, setIsStartModalOpen] = useState(() => requiresSetup);
@@ -84,8 +85,6 @@ export const TictactoeTable = () => {
     clearHistory();
   };
 
-  // Series lifecycle is handled by useSeries
-
   return (
     <>
       <WinnerModal
@@ -100,7 +99,12 @@ export const TictactoeTable = () => {
         onSubmit={startNewGame}
       />
       <div className="board-container">
-        <Board board={board} winningLine={winningLine} winner={winner} onClick={handleClick} />
+        <Board
+          board={board}
+          winningLine={winningLine}
+          winner={winner}
+          onClick={handleClick}
+        />
         <span className="board-footer" />
       </div>
       <Status winner={winner} isDraw={isDraw} currentPlayer={currentPlayer} />
