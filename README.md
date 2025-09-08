@@ -98,13 +98,13 @@ O desafio consistiu em criar uma versão evoluída do Jogo da Velha, com foco em
 ```
 src/
   components/
-    atoms/            # Componentes básicos e reutilizáveis
+    atoms/            
       Modal/          # Modal base com animação padrão
       Square/         # Célula do tabuleiro
       X/, O/          # Ícones SVG
       CurrentPlayer/  # Indicador do jogador atual
       btnAutoplay/    # Botão + contador do autoplay
-    molecules/      # Combinação de átomos
+    molecules/      
       Header/         # Placar (p1, empates, p2)
       StartModal/     # Configuração inicial (nomes e meta)
       WinnerModal/    # Resultado da série (apenas X/O)
