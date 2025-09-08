@@ -104,7 +104,7 @@ src/
       X/, O/          # Ícones SVG
       CurrentPlayer/  # Indicador do jogador atual
       btnAutoplay/    # Botão + contador do autoplay
-      molecules/      # Combinação de átomos
+    molecules/      # Combinação de átomos
       Header/         # Placar (p1, empates, p2)
       StartModal/     # Configuração inicial (nomes e meta)
       WinnerModal/    # Resultado da série (apenas X/O)
