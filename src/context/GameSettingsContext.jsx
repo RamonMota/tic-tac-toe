@@ -1,8 +1,8 @@
 import { createContext, useContext, useMemo, useState } from "react";
 
 const GameSettingsContext = createContext({
-  p1: "Player 1",
-  p2: "Player 2",
+  p1: "Player X",
+  p2: "Player O",
   amountToWin: 1,
   isConfigured: false,
   setSettings: () => {},
@@ -11,8 +11,8 @@ const GameSettingsContext = createContext({
 export function GameSettingsProvider({ children }) {
   const [settings, setSettingsState] = useState(() => {
     try {
-      const p1 = localStorage.getItem("p1") || "Player 1";
-      const p2 = localStorage.getItem("p2") || "Player 2";
+      const p1 = localStorage.getItem("p1") || "Player X";
+      const p2 = localStorage.getItem("p2") || "Player O";
       const amountToWinRaw = localStorage.getItem("amountToWin");
       const amountToWin = amountToWinRaw ? Number(amountToWinRaw) : 1;
       const isConfigured = Boolean(amountToWinRaw);

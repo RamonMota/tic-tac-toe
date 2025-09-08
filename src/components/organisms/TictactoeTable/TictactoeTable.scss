@@ -32,20 +32,6 @@
   }
 }
 
-.status-bar-temp {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  svg {
-    width: 20px;
-    display: block;
-    margin: auto;
-    animation: fadeInSymbol 0.5s cubic-bezier(.2, .8, .25, 1) .5s both !important;
-  }
-}
-
 .flex-row {
   display: flex;
   align-items: center;

@@ -46,7 +46,7 @@ export const StartModal = ({ open, onClose, onSubmit }) => {
         </div>
         <form onSubmit={handleSubmit} className="start-form">
           <div className="content-input-form">
-            <label>Nome do P1</label>
+            <label>Nome do player 'X'</label>
             <input
               type="text"
               name="player1"
@@ -58,7 +58,7 @@ export const StartModal = ({ open, onClose, onSubmit }) => {
             />
           </div>
           <div className="content-input-form">
-            <label>Nome do P2</label>
+            <label>Nome do player 'O'</label>
             <input
               type="text"
               name="player2"

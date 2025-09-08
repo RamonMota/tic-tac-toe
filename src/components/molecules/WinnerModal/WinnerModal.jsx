@@ -47,7 +47,7 @@ export const WinnerModal = ({ open, onClose, onResetGame, onNewGame }) => {
         <div className="content-modal-body">
           <h3 className="title">Parabéns, {winnerLabel}!</h3>
           <p className="description">
-            Você atingiu {amountToWin} vitórias e <br /> venceu esta série.
+            Você atingiu {amountToWin} vitórias e <br /> venceu esta rodada.
           </p>
         </div>
         <Header />

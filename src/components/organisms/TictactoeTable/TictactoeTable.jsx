@@ -9,10 +9,10 @@ import { AUTOPLAY_INTERVAL_MS } from "../../../constants";
 import { storage } from "../../../services/storage";
 import { Board } from "../../atoms/Board/Board";
 import { Controls } from "../../atoms/Controls/Controls";
-import { Status } from "../../atoms/Status/Status";
 import { useSeries } from "../../../hooks/useSeries";
 import { useRequiresSetup } from "../../../hooks/useRequiresSetup";
 import "./TictactoeTable.scss";
+import { CurrentPlayer } from "../../atoms/CurrentPlayer/CurrentPlayer";
 
 export const TictactoeTable = () => {
   const [isAutoplay, setIsAutoplay] = useState(
@@ -107,8 +107,8 @@ export const TictactoeTable = () => {
         />
         <span className="board-footer" />
       </div>
-      <Status winner={winner} isDraw={isDraw} currentPlayer={currentPlayer} />
-      <Controls
+      <CurrentPlayer winner={winner} isDraw={isDraw} currentPlayer={currentPlayer} />
+      <Controls 
         isAutoplay={isAutoplay}
         countdown={countdown}
         onToggleAutoplay={handleAutoplay}
